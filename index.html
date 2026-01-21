@@ -24,7 +24,7 @@
         } else {
             // GAS APIをJSONPで叩く (CORS回避とバナー回避)
             const script = document.createElement('script');
-            script.src = `https://script.google.com/macros/s/AKfycbwAHqwNPwHXdu2A7mEDPtMZJeUIzC0GodU97A6iLBVpNLN_CMCNvnWsIiLxhq-R5S7I/exec?acc=${encodeURIComponent(acc)}&src=${encodeURIComponent(src)}&callback=redirect`;
+            script.src = `https://script.google.com/macros/s/AKfycbzAOC9te5VJQfGtVUk2EaUc6_x-Gol5yFozVW3Q4PNyfIBxf_jXg6-M1ijBQPF9ed1u/exec?acc=${encodeURIComponent(acc)}&src=${encodeURIComponent(src)}&callback=redirect`;
             document.body.appendChild(script);
         }
 
