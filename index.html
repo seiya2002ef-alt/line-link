@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>読み込み中...</title>
+    <style>
+        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #fff; font-family: sans-serif; }
+        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #06C755; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="loader"></div>
+    <script>
+        // URLからパラメータを取得
+        const params = new URLSearchParams(window.location.search);
+        const acc = params.get('acc');
+        const src = params.get('src');
+
+        if (!acc || !src) {
+            document.body.innerHTML = "無効なアクセスです。";
+        } else {
+            // GAS APIをJSONPで叩く (CORS回避とバナー回避)
+            const script = document.createElement('script');
+            script.src = `https://script.google.com/macros/s/AKfycbxp-YMLtUFyZQLh4Eh-fR5dX2LkACziN5rgwD25bM37tkDbNC1c1dLWIZWnsxacCfA9/exec?acc=${encodeURIComponent(acc)}&src=${encodeURIComponent(src)}&callback=redirect`;
+            document.body.appendChild(script);
+        }
+
+        // GASからのレスポンスを受け取って遷移
+        function redirect(data) {
+            if (data.ok && data.url) {
+                window.location.replace(data.url);
+            } else {
+                document.body.innerHTML = "エラー: " + (data.msg || "遷移先が見つかりません。");
+            }
+        }
+    </script>
+</body>
+</html>
